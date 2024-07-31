@@ -1,14 +1,25 @@
 'use client';
 
-import React from 'react'
+import React, { useState } from 'react'
 
 export default function RedirectButton() {
+  const urlParams = typeof window !== 'undefined' ? new URLSearchParams(window.location.search) : new Map();
+  const getUrlParams = urlParams.get('url') ?? '';
+  const [url, setUrl] = useState(getUrlParams);
   const onClick = () => {
-    window.location.href = 'https://www-pr24969.web.tvlk.dev/en-id/flight/affiliate/redirect?ap=CGK.SIN&dt=13-7-2024.15-7-2024&ps=1.0.0&sc=ECONOMY';
+    window.location.href = url;
   };
   return (
-    <button onClick={onClick} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-      Redirect
-    </button>
+    <div className='flex-row gap-4 items-center'>
+      <input
+        className="w-full p-2 mb-4"
+        type="text"
+        value={url}
+        onChange={(e) => setUrl(e.target.value)}
+      />
+      <button onClick={onClick} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+        Redirect
+      </button>
+    </div>
   )
 }
